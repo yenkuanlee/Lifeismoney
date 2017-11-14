@@ -20,8 +20,8 @@ f.close()
 
 def send_email(recipient, subject, body):
     import smtplib
-    user = "washwash5566@gmail.com"
-    pwd = "master02"
+    user = ""
+    pwd = ""
     gmail_user = user
     gmail_pwd = pwd
     FROM = user
