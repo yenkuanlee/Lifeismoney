@@ -18,6 +18,18 @@ while True:
     UrlSet.add(line)
 f.close()
 
+def GetUinfo(Url):
+    content = requests.get(
+        url= Url,
+        cookies={'over18': '1'}
+    ).content.decode('utf-8')
+    try:
+        tmp = content.split("<div id=\"main-content\" class=")[1].split("<span class=\"article-meta-value\">")
+        content = tmp[len(tmp)-1].split("</span></div>")[1].split("--\n<span class=\"f2\">")[0]
+    except Exception as e:
+        return str(e)
+    return content
+
 def send_email(recipient, subject, body):
     import smtplib
     user = ""
@@ -65,7 +77,7 @@ for i in range(1,len(tmp),1):
         title = OO[1]
         ThisSet.add(url+"\t"+title)
         if url not in UrlSet:
-            send_email("yenkuanlee@gmail.com",title,url)
+            send_email("yenkuanlee@gmail.com",title,url+"\n\n"+GetUinfo(url))
             #print "https://www.ptt.cc"+OO[0]+"\t"+OO[1]
     except:
         pass
